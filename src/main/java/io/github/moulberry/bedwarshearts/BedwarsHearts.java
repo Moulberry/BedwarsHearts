@@ -57,7 +57,6 @@ public class BedwarsHearts {
     @SubscribeEvent
     public void onChatMessage(ClientChatReceivedEvent event) {
         if(BED_LOSS_PATTERN.matcher(event.message.getFormattedText()).matches()) {
-            System.out.println("Matches!");
             useHardcoreHearts = true;
         }
     }
