@@ -1,4 +1,4 @@
-package io.github.moulberry.insomnia;
+package io.github.moulberry.bedwarshearts;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

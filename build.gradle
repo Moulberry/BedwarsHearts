@@ -1,12 +1,16 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven {
+            name 'JitPack'
+            url 'https://jitpack.io'
+        }
+        maven { url "https://maven.minecraftforge.net/" }
         maven { url = "https://repo.spongepowered.org/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-		classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath "com.github.asbyth:ForgeGradle:6f53277"
+        classpath 'com.github.LxGaming:MixinGradle:d75e32e'
 		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
     }
 }
@@ -21,8 +25,8 @@ targetCompatibility = 1.8
 
 version = "1.0-REL"
 group= "io.github.moulberry"
-archivesBaseName = "Insomnia"
-String modid = "insomnia"
+archivesBaseName = "BedwarsHearts"
+String modid = "bedwarshearts"
 String mixinClassifier = "dep"
 
 minecraft {
@@ -41,8 +45,8 @@ repositories {
 
 dependencies {
     compile('org.spongepowered:mixin:0.7.11-SNAPSHOT')
+    annotationProcessor('org.spongepowered:mixin:0.7.11-SNAPSHOT')
 }
-
 
 mixin {
     add sourceSets.main, "mixins.${modid}.refmap.json"
@@ -62,7 +66,7 @@ shadowJar {
 		include(dependency('org.spongepowered:mixin:0.7.11-SNAPSHOT'))
     }
 	
-	exclude 'module-info.class'
+    exclude 'module-info.class'
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
 
@@ -74,23 +78,12 @@ reobf {
 		mappingType = 'SEARGE' 
 	}
 }
-
-
-task runClientFix {
-	doLast {
-		String fileName = "${archivesBaseName}-${version}-${mixinClassifier}.jar"
-		ant.move file: "${buildDir}/libs/${fileName}", tofile: "${projectDir}/run/mods/${fileName}"
-		ant.delete file: "${buildDir}/libs/${archivesBaseName}-${version}.jar"
-	}
-}
-
 runClient {
 	standardInput = System.in
 }
 
 build.dependsOn(shadowJar)
 runClient.dependsOn(build)
-runClient.dependsOn(runClientFix)
 
 processResources
 {
@@ -106,3 +99,13 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+
+task moveResources {
+    doLast {
+        ant.move file: "${buildDir}/resources/main",
+                todir: "${buildDir}/classes/java"
+    }
+}
+moveResources.dependsOn processResources
+classes.dependsOn moveResources

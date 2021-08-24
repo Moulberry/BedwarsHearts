@@ -1,8 +1,8 @@
 [
     {
-      "modid": "insomnia",
-      "name": "Insomnia",
-      "description": "",
+      "modid": "bedwarshearts",
+      "name": "BedwarsHearts",
+      "description": "Makes hearts in bedwars become hardcore hearts when bed is lost",
       "version": "${version}",
       "mcversion": "${mcversion}",
       "url": "",

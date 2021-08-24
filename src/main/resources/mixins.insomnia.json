@@ -1,9 +1,0 @@
-{
-  "package": "io.github.moulberry.insomnia.mixins",
-  "refmap": "mixins.insomnia.refmap.json",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "MixinRenderPlayer",
-    "MinecraftAccessor"
-  ]
-}
